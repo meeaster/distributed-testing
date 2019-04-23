@@ -1,0 +1,33 @@
+@apiUrl = https://localhost:5000
+
+@api2Url = https://localhost:5002
+
+@accessToken = XXXXXXXXXXXXXXX
+
+###
+GET {{apiUrl}}/api/values HTTP/1.1
+
+###
+POST {{apiUrl}}/api/test1
+content-type: application/json
+
+{
+	"String1": "new test 4",
+	"Int1": 4,
+}
+
+###
+GET {{apiUrl}}/api/test1/5cbcfd7652175961c0f0176c
+
+
+###
+POST {{apiUrl}}/api_test2/test2
+content-type: application/json
+
+{
+	"String2": "test2",
+	"Int2": 2,
+}
+
+###
+GET {{apiUrl}}/api_test2/test2/324c628055344e119c6cd5a8d62da1e9

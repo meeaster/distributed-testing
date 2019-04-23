@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  redis-commander:
+      container_name: redis-commander
+      hostname: redis-commander
+      image: rediscommander/redis-commander:latest
+      restart: always
+      environment:
+      - REDIS_HOSTS=local:consul:6379
+      ports:
+      - "8081:8081"
+      networks:
+        - distributedtesting
+
+networks:
+  distributedtesting:
+    name: distributedtesting-network

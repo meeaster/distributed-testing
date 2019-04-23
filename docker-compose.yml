@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  distributedtesting:
+    image: ${DOCKER_REGISTRY-}distributedtesting
+    build:
+      context: .
+      dockerfile: DistributedTesting/Dockerfile

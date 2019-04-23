@@ -1,0 +1,5 @@
+compose infrastructure docker containers
+- docker-compose -f infrastructure.yml up -d
+
+rabbitmq: http://localhost:15672
+consul: http://localhost:8500

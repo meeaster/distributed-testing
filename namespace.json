@@ -1,0 +1,10 @@
+{
+  "kind": "Namespace",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "distributed-testing-ns",
+    "labels": {
+      "name": "distributed-testing-ns"
+    }
+  }
+}
