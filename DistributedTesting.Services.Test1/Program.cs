@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using DistributedTesting.Common.Logging;
+using DistributedTesting.Common.Metrics;
 
 namespace DistributedTesting.Services.Test1
 {
@@ -29,6 +30,7 @@ namespace DistributedTesting.Services.Test1
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
                 .UseLogging("test1")
+                .UseAppMetrics()
                 .UseStartup<Startup>();
         }
     }

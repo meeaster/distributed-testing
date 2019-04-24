@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using CorrelationId;
 using DistributedTesting.Common;
 using DistributedTesting.Common.Jaeger;
+using DistributedTesting.Common.Logging;
 using DistributedTesting.Common.Messages;
 using DistributedTesting.Common.RabbitMq;
 using DistributedTesting.Common.Redis;
@@ -40,6 +42,7 @@ namespace DistributedTesting.Services.Test1
             services.AddRedis(Configuration);
             services.AddJaeger(Configuration);
             services.AddOpenTracing();
+            services.AddCorrelationId();
 
             services.AddTransient(typeof(IRequestHandler<Command<CreateTest1Object>>), typeof(CreateTest1ObjectHandler));
 
@@ -58,6 +61,14 @@ namespace DistributedTesting.Services.Test1
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseLoggingCorrelationId();
+            app.UseCorrelationId(new CorrelationIdOptions
+            {
+                Header = "X-Correlation-ID",
+                UseGuidForCorrelationId = true,
+                UpdateTraceIdentifier = true
+            });
 
             app.RegisterWithConsul(lifetime);
             app.UseRabbitMq()

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Consul;
+using CorrelationId;
 using DistributedTesting.Common;
 using DistributedTesting.Common.Jaeger;
+using DistributedTesting.Common.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +41,7 @@ namespace DistributedTesting
             services.AddConsul(Configuration);
             services.AddJaeger(Configuration);
             services.AddOpenTracing();
+            services.AddCorrelationId();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +57,13 @@ namespace DistributedTesting
                 app.UseHsts();
             }
 
+            app.UseLoggingCorrelationId();
+            app.UseCorrelationId(new CorrelationIdOptions
+            {
+                Header = "X-Correlation-ID",
+                UseGuidForCorrelationId = true,
+                UpdateTraceIdentifier = true
+            });
 
             app.UseOcelot().Wait();
             app.RegisterWithConsul(lifetime);

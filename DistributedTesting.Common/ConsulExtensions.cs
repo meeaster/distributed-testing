@@ -40,7 +40,7 @@ namespace DistributedTesting.Common
             // Get server IP address
             var features = app.Properties["server.Features"] as FeatureCollection;
             var addresses = features.Get<IServerAddressesFeature>();
-            var address = addresses.Addresses.First();
+            var address = addresses.Addresses.First().Replace("*", "localhost");
 
             // Register service with consul
             var uri = new Uri(address);

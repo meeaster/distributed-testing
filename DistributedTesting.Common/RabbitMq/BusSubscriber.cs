@@ -15,6 +15,7 @@ using Polly;
 using RawRabbit;
 using RawRabbit.Common;
 using RawRabbit.Enrichers.MessageContext;
+using Serilog.Context;
 
 namespace DistributedTesting.Common.RabbitMq
 {
@@ -107,7 +108,7 @@ namespace DistributedTesting.Common.RabbitMq
                     .BuildSpan("executing-handler")
                     .AsChildOf(_tracer.ActiveSpan)
                     .StartActive(true);
-
+                using (LogContext.PushProperty("X-Correlation-ID", correlationContext.Id))
                 using (scope)
                 {
                     var span = scope.Span;
@@ -120,7 +121,7 @@ namespace DistributedTesting.Common.RabbitMq
 
                         var preLogMessage = $"Handling a message: '{messageName}' " +
                                       $"with correlation id: '{correlationContext.Id}'. {retryMessage}";
-                        
+
                         _logger.LogInformation(preLogMessage);
                         span.Log(preLogMessage);
 
