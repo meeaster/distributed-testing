@@ -74,6 +74,8 @@ services:
   jaeger:
     image: jaegertracing/all-in-one
     container_name: jaeger
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
     ports:
       - 5775:5775/udp
       - 5778:5778
@@ -99,7 +101,7 @@ services:
       - seq:/data
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
@@ -112,7 +114,7 @@ services:
       - distributedtesting
   
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.0.0
+    image: docker.elastic.co/kibana/kibana:6.7.1
     container_name: kibana
     ports:
       - 5601:5601

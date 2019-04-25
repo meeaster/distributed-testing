@@ -3,3 +3,32 @@ compose infrastructure docker containers
 
 rabbitmq: http://localhost:15672
 consul: http://localhost:8500
+jaeger: http://localhost:16686
+
+mongo viewer: https://robomongo.org/
+redis commander: https://github.com/joeferner/redis-commander, http://localhost:8081/
+    - for some reason has trouble connecting to redis using localhost (even in the same docker network)
+    - had to manually specify the internal docker ip address for the redis
+
+vscode-restclient: https://github.com/Huachao/vscode-restclient
+
+kubectl label namespace distributed-testing-ns istio-injection=enabled
+kubectl config set-context dt --namespace=distributed-testing-ns --cluster=docker-for-desktop-cluser --user=docker-for-desktop
+
+
+installing helm
+- https://www.digitalocean.com/community/tutorials/how-to-install-software-on-kubernetes-clusters-with-the-helm-package-manager
+
+install local helm chart
+- https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/
+    helm package ./distributedtesting
+    helm install --name distributedtesting distributedtesting-0.1.0.tgz --set service.type=NodePort
+    helm install --name distributedtesting ./distributedtesting --set service.type=NodePort
+
+docker build . -f DistributedTesting/Dockerfile -t meeaster/distributedtesting:latest
+docker container run meeaster/distributedtesting --urls=http://*:5000 --network=distributedtesting-network --name=distributed-testing -p 5000:5000 --hostname distributed-testing --enviornment docker
+docker push meeaster/distributedtesting:latest
+
+helm install --name consul ./ --set service.type=NodePort
+
+https://github.com/kubeapps/kubeapps

@@ -42,7 +42,7 @@ namespace DistributedTesting.Services.Test1
             services.AddRedis(Configuration);
             services.AddJaeger(Configuration);
             services.AddOpenTracing();
-            services.AddCorrelationId();
+            //services.AddCorrelationId();
 
             services.AddTransient(typeof(IRequestHandler<Command<CreateTest1Object>>), typeof(CreateTest1ObjectHandler));
 
@@ -62,13 +62,13 @@ namespace DistributedTesting.Services.Test1
                 app.UseHsts();
             }
 
-            app.UseLoggingCorrelationId();
-            app.UseCorrelationId(new CorrelationIdOptions
-            {
-                Header = "X-Correlation-ID",
-                UseGuidForCorrelationId = true,
-                UpdateTraceIdentifier = true
-            });
+            //app.UseLoggingCorrelationId();
+            //app.UseCorrelationId(new CorrelationIdOptions
+            //{
+            //    Header = "X-Correlation-ID",
+            //    UseGuidForCorrelationId = true,
+            //    UpdateTraceIdentifier = true
+            //});
 
             app.RegisterWithConsul(lifetime);
             app.UseRabbitMq()

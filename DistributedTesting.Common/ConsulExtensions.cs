@@ -42,6 +42,7 @@ namespace DistributedTesting.Common
             var addresses = features.Get<IServerAddressesFeature>();
             var address = addresses.Addresses.First().Replace("*", "localhost");
 
+            logger.LogInformation($"server.Features.Address[0]={address}");
             // Register service with consul
             var uri = new Uri(address);
             var registration = new AgentServiceRegistration()

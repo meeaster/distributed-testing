@@ -2,7 +2,7 @@
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/api_test2/{url}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api_test2/{url}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "ServiceName": "Test2",
@@ -12,7 +12,7 @@
     },
     {
       "DownstreamPathTemplate": "/{url}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/{url}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "ServiceName": "Test1",
@@ -22,9 +22,9 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000",
+    "BaseUrl": "http://distributedtesting:5000",
     "ServiceDiscoveryProvider": {
-      "Host": "localhost",
+      "Host": "late-cord-consul.default.svc.cluster.local",
       "Port": 8500,
       "Type": "Consul"
     }

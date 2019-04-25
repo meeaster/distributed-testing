@@ -20,11 +20,10 @@ namespace DistributedTesting.Services.Test1.Controllers
         private readonly ITracer _tracer;
         private readonly ICorrelationContextAccessor _correlationContextAccessor;
 
-        public Test1Controller(IBusPublisher busPublisher, ITracer tracer, ICorrelationContextAccessor correlationContextAccessor)
+        public Test1Controller(IBusPublisher busPublisher, ITracer tracer)
         {
             _busPublisher = busPublisher;
             _tracer = tracer;
-            _correlationContextAccessor = correlationContextAccessor;
         }
 
         [HttpPost]
@@ -37,12 +36,12 @@ namespace DistributedTesting.Services.Test1.Controllers
 
         protected ICorrelationContext GetContext<T>(Guid? resourceId = null, string resource = "")
         {
-            if (!string.IsNullOrWhiteSpace(resource))
+            if (!string.IsNullOrWhiteSpace(resource)) 
             {
                 resource = $"{resource}/{resourceId}";
             }
 
-            return Common.RabbitMq.CorrelationContext.Create<T>(Guid.Parse(_correlationContextAccessor.CorrelationContext.CorrelationId), Guid.Empty, resourceId ?? Guid.Empty,
+            return Common.RabbitMq.CorrelationContext.Create<T>(Guid.NewGuid(), Guid.Empty, resourceId ?? Guid.Empty,
                HttpContext.TraceIdentifier, HttpContext.Connection.Id, _tracer.ActiveSpan.Context.ToString(),
                Request.Path.ToString(), "en-us", resource);
         }

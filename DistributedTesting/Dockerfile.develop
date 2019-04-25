@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["DistributedTesting.Common/DistributedTesting.Common.csproj", "DistributedTesting.Common/"]
+COPY ["DistributedTesting/DistributedTesting.csproj", "DistributedTesting/"]
+
+RUN dotnet restore "DistributedTesting/DistributedTesting.csproj"
+COPY . .
+WORKDIR "/src/DistributedTesting"
+RUN dotnet build --no-restore "DistributedTesting.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

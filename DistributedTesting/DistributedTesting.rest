@@ -1,4 +1,4 @@
-@apiUrl = https://localhost:5000
+@apiUrl = http://localhost:5000
 
 @api2Url = https://localhost:5002
 

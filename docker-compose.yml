@@ -6,3 +6,17 @@ services:
     build:
       context: .
       dockerfile: DistributedTesting/Dockerfile
+
+  distributedtesting.services.test1:
+    image: ${DOCKER_REGISTRY-}distributedtestingservicestest1
+    build:
+      context: .
+      dockerfile: DistributedTesting.Services.Test1/Dockerfile
+
+
+  distributedtesting.services.test2:
+    image: ${DOCKER_REGISTRY-}distributedtestingservicestest2
+    build:
+      context: .
+      dockerfile: DistributedTesting.Services.Test2/Dockerfile
+

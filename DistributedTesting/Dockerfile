@@ -18,4 +18,7 @@ RUN dotnet publish "DistributedTesting.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+ENV ASPNETCORE_URLS http://distributedtesting:5000
+ENV ASPNETCORE_ENVIRONMENT docker
+EXPOSE 5000
 ENTRYPOINT ["dotnet", "DistributedTesting.dll"]

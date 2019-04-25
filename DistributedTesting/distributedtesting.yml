@@ -1,0 +1,12 @@
+version: "3.5"
+
+services:
+  distributedtesting:
+    image: meeaster/distributedtesting:latest
+    container_name: distributedtesting
+    networks:
+      - distributedtesting
+        
+networks:
+  distributedtesting:
+    name: distributedtesting-network
